@@ -5,7 +5,7 @@
     <title>W3.CSS Template</title>
     <meta charset="UTF-8">
     <script type="text/javascript">
-       async function generateUserID() {
+     function generateUserID() {
             console.log(" centraldomain generateUserID ");
             try {
                 let randomPart = crypto.randomUUID();
@@ -23,7 +23,7 @@
                 const secure = window.location.protocol === 'https:' ? "Secure" : ""; // Only secure if HTTPS
                 const sameSite = "SameSite=Lax"; // Allow cross-origin requests to a certain extent -- Lax
                 const domain = window.location.hostname.split('.').slice(-2).join('.'); // Get root domain     // "domain=.vercel.app"; // Set the highest-level domain
-                console.log(" highest-level domain ", domain);
+                console.log(" centraldomain highest-level domain ", domain);
                 //  const cookieString = `${name}=${value}; ${expires}; path=/; ${secure}; ${sameSite}`;
                 //  console.log("Setting cookie: ", cookieString);
                 //  document.cookie = cookieString;
@@ -32,8 +32,7 @@
                 console.log("Error : ", error);
             }
         }
-
-        let userID = await generateUserID();
+        const userID = generateUserID();
         setPersistentCookie('userID', userID, 365);
     </script>
 </head>
