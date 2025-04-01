@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>W3.CSS Template</title>
     <meta charset="UTF-8">
     <script type="text/javascript">
-        function generateUserID() {
-          console.log(" centraldomain generateUserID ");
-  try {
-    let randomPart = crypto.randomUUID();
-    var timestampPart = Math.floor(Date.now() / 1000).toString(16); // Current timestamp in seconds (to ensure uniqueness)
-    return randomPart + '.' + timestampPart; // Combine random part and timestamp for a unique ID  
-  } catch (error) {
-    console.log("Error : ", error);
-  }
-}
-function setPersistentCookie(name, value, days = 365) {
-  try {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Calculate the expiration date
-    const expires = "expires=" + date.toUTCString(); // Convert to UTC string format
-    const secure = window.location.protocol === 'https:' ? "Secure" : ""; // Only secure if HTTPS
-    const sameSite = "SameSite=Lax"; // Allow cross-origin requests to a certain extent -- Lax
-    const domain = window.location.hostname.split('.').slice(-2).join('.'); // Get root domain     // "domain=.vercel.app"; // Set the highest-level domain
-    console.log(" highest-level domain ", domain);
-    //  const cookieString = `${name}=${value}; ${expires}; path=/; ${secure}; ${sameSite}`;
-    //  console.log("Setting cookie: ", cookieString);
-    //  document.cookie = cookieString;
-    document.cookie = name + "=" + value + ";" + expires + ";path=/;" + secure + ";" + sameSite;
-  } catch (error) {
-    console.log("Error : ", error);
-  }
-}
+       async function generateUserID() {
+            console.log(" centraldomain generateUserID ");
+            try {
+                let randomPart = crypto.randomUUID();
+                var timestampPart = Math.floor(Date.now() / 1000).toString(16); // Current timestamp in seconds (to ensure uniqueness)
+                return randomPart + '.' + timestampPart; // Combine random part and timestamp for a unique ID  
+            } catch (error) {
+                console.log("Error : ", error);
+            }
+        }
+        function setPersistentCookie(name, value, days = 365) {
+            try {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Calculate the expiration date
+                const expires = "expires=" + date.toUTCString(); // Convert to UTC string format
+                const secure = window.location.protocol === 'https:' ? "Secure" : ""; // Only secure if HTTPS
+                const sameSite = "SameSite=Lax"; // Allow cross-origin requests to a certain extent -- Lax
+                const domain = window.location.hostname.split('.').slice(-2).join('.'); // Get root domain     // "domain=.vercel.app"; // Set the highest-level domain
+                console.log(" highest-level domain ", domain);
+                //  const cookieString = `${name}=${value}; ${expires}; path=/; ${secure}; ${sameSite}`;
+                //  console.log("Setting cookie: ", cookieString);
+                //  document.cookie = cookieString;
+                document.cookie = name + "=" + value + ";" + expires + ";path=/;" + secure + ";" + sameSite;
+            } catch (error) {
+                console.log("Error : ", error);
+            }
+        }
 
-let userID = generateUserID();
-setPersistentCookie('userID', userID, 365);
+        let userID = await generateUserID();
+        setPersistentCookie('userID', userID, 365);
     </script>
-  </head>
-<body> 
+</head>
+
+<body>
 </body>
+
 </html>
