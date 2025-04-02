@@ -923,11 +923,11 @@ window.addEventListener('load', () => {
   // Read the 'userID' cookie from this domain
 
    let cookieValue = getCookie('userID');
-  if (!cookieValue) {
+//  if (!cookieValue) {
     // If no userID exists in the cookies, generate a new one
-    cookieValue = generateUserID();
-    setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
-  }
+  //  cookieValue = generateUserID();
+    //setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
+  //}
  
   // Check if the cookie was found
   if (cookieValue !== undefined) {
