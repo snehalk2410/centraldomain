@@ -33,6 +33,22 @@
                 console.log("Error : ", error);
             }
         }
+        // Function to get a cookie by name
+function getCookie(name) {
+  try {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      const [key, value] = cookie.split('=');
+      if (key.trim() === name.trim()) {
+        return decodeURIComponent(value);
+        // return value;
+      }
+    }
+    return null; // Return null if the cookie is not found
+  } catch (error) {
+    console.log("Error : ", error);
+  }
+}
         let userID = getCookie('userID');
          console.log(" centraldomain userID ", userID)
   if (!userID) {
