@@ -17,7 +17,6 @@
         }
         function setPersistentCookie(name, value, days = 365) {
             try {
-                debugger;
                 const date = new Date();
                 date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Calculate the expiration date
                 const expires = "expires=" + date.toUTCString(); // Convert to UTC string format
@@ -29,6 +28,8 @@
                 //  console.log("Setting cookie: ", cookieString);
                 //  document.cookie = cookieString;
                 document.cookie = name + "=" + value + ";" + expires + ";path=/;" + secure + ";" + sameSite;
+
+                console.log("centraldomain document.cookie ", document.cookie);
             } catch (error) {
                 console.log("Error : ", error);
             }
