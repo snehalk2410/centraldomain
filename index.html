@@ -68,7 +68,11 @@ function getCookieval(name) {
   // Return undefined if cookie not found
   return undefined;
 }
- 
+
+
+     document.addEventListener('DOMContentLoaded', function () {
+    try {
+         debugger;
 // The specific name of the cookie to read from THIS domain ('testinovation-cdp.vercel.app')
 const thirdPartyCookieName = 'userID';
  
@@ -84,6 +88,8 @@ window.addEventListener('load', () => {
  debugger;
   // Read the 'userID' cookie from this domain
   const cookieValue = getCookieval(thirdPartyCookieName);
+  const cookieValue1 = getCookie('userID');
+     console.log(" cookieValue1 ", cookieValue1)
  
   // Check if the cookie was found
   if (cookieValue !== undefined) {
@@ -113,6 +119,7 @@ try {
 } catch (e) {
     console.error('[IFRAME] Error during script setup or initial execution:', e);
 }
+    });
 
 </script>
 </head>
