@@ -33,9 +33,14 @@
                 console.log("Error : ", error);
             }
         }
-        const userID = generateUserID();
-        console.log(" centraldomain userID ", userID)
-        setPersistentCookie('userID', userID, 365);
+        let userID = getCookie('userID');
+         console.log(" centraldomain userID ", userID)
+  if (!userID) {
+    // If no userID exists in the cookies, generate a new one
+    userID = generateUserID();
+       console.log(" centraldomain userID 1", userID)
+    setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
+  }
     </script>
 </head>
 
