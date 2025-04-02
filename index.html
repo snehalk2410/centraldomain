@@ -1356,6 +1356,57 @@ if (automaticTracking === true) {
       }
     }, 0);
   });
+
+  function getCookieval(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    // Return undefined if cookie not found
+    return undefined;
+  }
+   
+  // The specific name of the cookie to read from THIS domain ('testinovation-cdp.vercel.app')
+  const thirdPartyCookieName = 'userID';
+   
+  // The origin of the PARENT window (YOUR HOST DOMAIN) that is allowed to receive the message.
+  // Use the specific origin provided by the user.
+  const parentOrigin = 'https://development-site-three.vercel.app'; 
+   
+  console.log(`[IFRAME] Page loaded. Cookie to find: '${thirdPartyCookieName}'. Target parent origin: '${parentOrigin}'`);
+   window.addEventListener('load', () => {
+     debugger;
+    console.log('[IFRAME] Window load event fired.');
+   
+    // Read the 'userID' cookie from this domain
+    const cookieValue = getCookieval(thirdPartyCookieName);
+   
+    // Check if the cookie was found
+    if (cookieValue !== undefined) {
+      console.log(`[IFRAME] Found cookie '${thirdPartyCookieName}'. Value: '${cookieValue}'. Sending to parent.`);
+   
+      // Send the cookie value to the specific parent origin
+      parent.postMessage({
+        type: 'thirdPartyCookieData', // Identifier for the parent listener
+        cookieName: thirdPartyCookieName, // Let parent know which cookie it was
+        value: cookieValue
+      }, parentOrigin); // SECURITY: Target the specific parent origin
+   
+    } else {
+      console.log(`[IFRAME] Cookie '${thirdPartyCookieName}' was not found on this domain.`);
+   
+      // Optionally, inform the parent that the cookie wasn't found
+      parent.postMessage({
+        type: 'thirdPartyCookieNotFound',
+        cookieName: thirdPartyCookieName
+      }, parentOrigin);
+    }
+  });
+
+   try {
+      console.log('[IFRAME] Script execution finished setup.');
+  } catch (e) {
+      console.error('[IFRAME] Error during script setup or initial execution:', e);
+  }
   // If automatic tracking is disabled, log a message
 } else {
   console.log("Automatic tracking is disabled.");
