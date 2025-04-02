@@ -67,7 +67,7 @@
 function setSessionCookie(name, value) {
   const expires = "expires=Session"; // Session cookie expires when the browser is closed
   const secure = window.location.protocol === 'https:' ? "Secure" : ""; // Only secure if HTTPS
-  const sameSite = "SameSite=Lax"; // Allow cross-origin requests to a certain extent
+  const sameSite = "SameSite=none"; // Allow cross-origin requests to a certain extent
 
   // Set the cookie with secure flags
 document.cookie = name + "=" + value + ";" + expires + ";path=/;" + secure + ";" + sameSite;
@@ -113,7 +113,7 @@ function setPersistentCookie(name, value, days = 365) {
   const expires = "expires=" + date.toUTCString(); // Convert to UTC string format
 
   const secure = window.location.protocol === 'https:' ? "Secure" : ""; // Only secure if HTTPS
-  const sameSite = "SameSite=Lax"; // Allow cross-origin requests to a certain extent
+  const sameSite = "SameSite=none"; // Allow cross-origin requests to a certain extent
 
   // Set the cookie with secure flags
 document.cookie = name + "=" + value + ";" + expires + ";path=/;" + secure + ";" + sameSite;
