@@ -57,6 +57,63 @@ function getCookie(name) {
        console.log(" centraldomain userID 1", userID)
     setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
   }
+
+     // --- Code to run INSIDE the iframe (on https://testinovation-cdp.vercel.app/) ---
+ 
+// Helper function to get a specific cookie by name from THIS iframe's domain
+function getCookieval(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  // Return undefined if cookie not found
+  return undefined;
+}
+ 
+// The specific name of the cookie to read from THIS domain ('testinovation-cdp.vercel.app')
+const thirdPartyCookieName = 'userID';
+ 
+// The origin of the PARENT window (YOUR HOST DOMAIN) that is allowed to receive the message.
+// Use the specific origin provided by the user.
+const parentOrigin = 'https://development-site-three.vercel.app'; 
+ 
+console.log(`[IFRAME] Page loaded. Cookie to find: '${thirdPartyCookieName}'. Target parent origin: '${parentOrigin}'`);
+ 
+// Attempt to read the cookie and send it when the iframe content is loaded
+window.addEventListener('load', () => {
+  console.log('[IFRAME] Window load event fired.');
+ debugger;
+  // Read the 'userID' cookie from this domain
+  const cookieValue = getCookieval(thirdPartyCookieName);
+ 
+  // Check if the cookie was found
+  if (cookieValue !== undefined) {
+    console.log(`[IFRAME] Found cookie '${thirdPartyCookieName}'. Value: '${cookieValue}'. Sending to parent.`);
+ 
+    // Send the cookie value to the specific parent origin
+    parent.postMessage({
+      type: 'thirdPartyCookieData', // Identifier for the parent listener
+      cookieName: thirdPartyCookieName, // Let parent know which cookie it was
+      value: cookieValue
+    }, parentOrigin); // SECURITY: Target the specific parent origin
+ 
+  } else {
+    console.log(`[IFRAME] Cookie '${thirdPartyCookieName}' was not found on this domain.`);
+ 
+    // Optionally, inform the parent that the cookie wasn't found
+    parent.postMessage({
+      type: 'thirdPartyCookieNotFound',
+      cookieName: thirdPartyCookieName
+    }, parentOrigin);
+  }
+});
+ 
+// Add error handling for postMessage if parentOrigin is invalid or other issues occur
+try {
+    console.log('[IFRAME] Script execution finished setup.');
+} catch (e) {
+    console.error('[IFRAME] Error during script setup or initial execution:', e);
+}
+
 </script>
 </head>
  
