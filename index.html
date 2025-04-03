@@ -26,7 +26,7 @@
                 //  const cookieString = `${name}=${value}; ${expires}; path=/; ${secure}; ${sameSite}`;
                 //  console.log("Setting cookie: ", cookieString);
                 //  document.cookie = cookieString;
-                document.cookie = name + "=" + value + ";" + expires + ";path=/;" + secure + ";" + sameSite;
+                document.cookie = name + "=" + value + ";" + expires + ";domain="+".vercel.app" + ";path=/;" + secure + ";" + sameSite;
  
                 console.log("centraldomain document.cookie ", document.cookie);
             } catch (error) {
