@@ -57,6 +57,58 @@ function getCookie(name) {
        console.log(" centraldomain userID 1", userID)
     setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
   }
+
+
+ 
+// The origin of the PARENT window (YOUR HOST DOMAIN) that is allowed to receive the message.
+// Use the specific origin provided by the user.
+const parentOrigin = 'https://development-site-three.vercel.app'; 
+ 
+console.log(`[IFRAME] Page loaded. Cookie to find: '${userID}'. Target parent origin: '${parentOrigin}'`);
+ 
+// Attempt to read the cookie and send it when the iframe content is loaded
+window.addEventListener('load', () => {
+  console.log('[IFRAME] Window load event fired.');
+ debugger;
+  // Read the 'userID' cookie from this domain
+
+   let cookieValue = getCookie('userID');
+  if (!cookieValue) {
+    // If no userID exists in the cookies, generate a new one
+    cookieValue = generateUserID();
+    setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
+  }
+ 
+  // Check if the cookie was found
+  if (cookieValue !== undefined) {
+    console.log(`[IFRAME] Found cookie '${userID}'. Value: '${cookieValue}'. Sending to parent.`);
+ 
+    // Send the cookie value to the specific parent origin
+    parent.postMessage({
+      type: 'thirdPartyCookieData', // Identifier for the parent listener
+      cookieName: userID, // Let parent know which cookie it was
+      value: cookieValue
+    }, parentOrigin); // SECURITY: Target the specific parent origin
+ 
+  } else {
+    console.log(`[IFRAME] Cookie '${userID}' was not found on this domain.`);
+ 
+    // Optionally, inform the parent that the cookie wasn't found
+    parent.postMessage({
+      type: 'thirdPartyCookieNotFound',
+      cookieName: userID
+    }, parentOrigin);
+  }
+});
+ 
+// Add error handling for postMessage if parentOrigin is invalid or other issues occur
+try {
+    console.log('[IFRAME] Script execution finished setup.');
+} catch (e) {
+    console.error('[IFRAME] Error during script setup or initial execution:', e);
+}
+
+
 </script>
 </head>
  
