@@ -62,7 +62,11 @@ function getCookie(name) {
  
 // The origin of the PARENT window (YOUR HOST DOMAIN) that is allowed to receive the message.
 // Use the specific origin provided by the user.
-const parentOrigin = 'https://development-site-three.vercel.app'; 
+//const parentOrigin = 'https://development-site-three.vercel.app'; 
+      const parentOrigins = [
+            "https://development-site-three.vercel.app",
+            "https://testinovation-cdp.vercel.app"
+        ];
  
 console.log(`[IFRAME] Page loaded. Cookie to find: '${userID}'. Target parent origin: '${parentOrigin}'`);
  
@@ -82,21 +86,31 @@ window.addEventListener('load', () => {
   // Check if the cookie was found
   if (cookieValue !== undefined) {
     console.log(`[IFRAME] Found cookie '${userID}'. Value: '${cookieValue}'. Sending to parent.`);
- 
-    // Send the cookie value to the specific parent origin
-    parent.postMessage({
-      type: 'thirdPartyCookieData', // Identifier for the parent listener
-      cookieName: 'userID', // Let parent know which cookie it was
-      value: cookieValue
-    }, parentOrigin); // SECURITY: Target the specific parent origin
- 
+  parentOrigins.forEach(origin => {
+                    try {
+                        parent.postMessage({
+                            type: 'thirdPartyCookieData',
+                            cookieName: 'userID',
+                            value: cookieValue
+                        }, origin);
+                        console.log(`[IFRAME] Sent cookie data to ${origin}`);
+                    } catch (err) {
+                        console.error(`[IFRAME] Error sending message to ${origin}:`, err);
+                    }
+                });
+   
   } else {
-    console.log(`[IFRAME] Cookie '${userID}' was not found on this domain.`); 
-    // Optionally, inform the parent that the cookie wasn't found
-    parent.postMessage({
-      type: 'thirdPartyCookieNotFound',
-      cookieName: 'userID',
-    }, parentOrigin);
+   parentOrigins.forEach(origin => {
+                    try {
+                        parent.postMessage({
+                            type: 'thirdPartyCookieNotFound',
+                            cookieName: 'userID',
+                        }, origin);
+                        console.log(`[IFRAME] Informed ${origin} that cookie was not found.`);
+                    } catch (err) {
+                        console.error(`[IFRAME] Error sending not-found message to ${origin}:`, err);
+                    }
+                });
   }
 });
  
