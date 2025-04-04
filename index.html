@@ -62,13 +62,13 @@ function getCookie(name) {
  
 // The origin of the PARENT window (YOUR HOST DOMAIN) that is allowed to receive the message.
 // Use the specific origin provided by the user.
-//const parentOrigin = 'https://development-site-three.vercel.app'; 
+//const parentOrigins = 'https://development-site-three.vercel.app'; 
       const parentOrigins = [
             "https://development-site-three.vercel.app",
             "https://testinovation-cdp.vercel.app"
         ];
  
-console.log(`[IFRAME] Page loaded. Cookie to find: '${userID}'. Target parent origin: '${parentOrigin}'`);
+console.log(`[IFRAME] Page loaded. Cookie to find: '${userID}'. Target parent origin: '${parentOrigins}'`);
  
 // Attempt to read the cookie and send it when the iframe content is loaded
 window.addEventListener('load', () => {
