@@ -82,11 +82,10 @@ window.addEventListener('load', () => {
     cookieValue = generateUserID();
     setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
   }
- cookieValue = undefined;
   // Check if the cookie was found
   if (cookieValue !== undefined) {
     console.log(`[IFRAME] Found cookie '${userID}'. Value: '${cookieValue}'. Sending to parent.`);
-  parentOrigins.forEach(origin => {
+  parentOrigin.forEach(origin => {
                     try {
                         parent.postMessage({
                             type: 'thirdPartyCookieData',
