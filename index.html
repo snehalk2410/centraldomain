@@ -85,7 +85,7 @@ window.addEventListener('load', () => {
   // Check if the cookie was found
   if (cookieValue !== undefined) {
     console.log(`[IFRAME] Found cookie '${userID}'. Value: '${cookieValue}'. Sending to parent.`);
-  parentOrigin.forEach(origin => {
+  parentOrigins.forEach(origin => {
                     try {
                         parent.postMessage({
                             type: 'thirdPartyCookieData',
