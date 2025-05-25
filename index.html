@@ -20,7 +20,7 @@
                 date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Calculate the expiration date
                 const expires = "expires=" + date.toUTCString(); // Convert to UTC string format
                 const secure = window.location.protocol === 'https:' ? "Secure" : ""; // Only secure if HTTPS
-                const sameSite = "SameSite=none"; // Allow cross-origin requests to a certain extent -- Lax
+                const sameSit = "SameSite=none"; // Allow cross-origin requests to a certain extent -- Lax
                 const domain = window.location.hostname.split('.').slice(-2).join('.'); // Get root domain     // "domain=.vercel.app"; // Set the highest-level domain
                 console.log(" centraldomain highest-level domain ", domain);
                 //  const cookieString = `${name}=${value}; ${expires}; path=/; ${secure}; ${sameSite}`;
