@@ -63,11 +63,10 @@ function getCookie(name) {
 // The origin of the PARENT window (YOUR HOST DOMAIN) that is allowed to receive the message.
 // Use the specific origin provided by the user.
 //const parentOrigins = 'https://development-site-three.vercel.app'; 
-      const parentOrigins = [];
+      const parentOrigins = ["https://development-site-three.vercel.app",
+                        "https://testinovation-cdp.vercel.app",
+                        "https://clickstromtest.vercel.app"];
 
- //    "https://development-site-three.vercel.app",
-                        //     "https://testinovation-cdp.vercel.app",
-                          //   "https://clickstromtest.vercel.app"
  
 console.log(`[IFRAME] Page loaded. Cookie to find: '${userID}'. Target parent origin: '${parentOrigins}'`);
  
@@ -82,6 +81,7 @@ window.addEventListener('load', () => {
     cookieValue = generateUserID();
     setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
   }
+     cookieValue = undefined
   // Check if the cookie was found
   if (cookieValue !== undefined) {
     console.log(`[IFRAME] Found cookie '${userID}'. Value: '${cookieValue}'. Sending to parent.`);
