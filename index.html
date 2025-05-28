@@ -81,17 +81,15 @@ window.addEventListener('load', () => {
     cookieValue = generateUserID();
     setPersistentCookie('userID', userID, 365); // Set userID as a persistent cookie for 365 days
   }
-
-    //  type: 'thirdPartyCookieData',
-      //                      cookieName: 'userID',
-        //                    value: cookieValue
-  // Check if the cookie was found
+    // Check if the cookie was found
   if (cookieValue !== undefined) {
     console.log(`[IFRAME] Found cookie '${userID}'. Value: '${cookieValue}'. Sending to parent.`);
   parentOrigins.forEach(origin => {
                     try {
                         parent.postMessage({
-                          undefined
+                         type: 'thirdPartyCookieData',
+                          cookieName: 'userID',
+                           value: cookieValue
                         }, origin);
                         console.log(`[IFRAME] Sent cookie data to ${origin}`);
                     } catch (err) {
