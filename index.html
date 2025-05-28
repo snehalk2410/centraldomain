@@ -91,7 +91,7 @@ window.addEventListener('load', () => {
   parentOrigins.forEach(origin => {
                     try {
                         parent.postMessage({
-                          
+                          undefined
                         }, origin);
                         console.log(`[IFRAME] Sent cookie data to ${origin}`);
                     } catch (err) {
